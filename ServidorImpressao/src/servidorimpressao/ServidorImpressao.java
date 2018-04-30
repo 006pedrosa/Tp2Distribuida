@@ -79,19 +79,19 @@ public class ServidorImpressao {
         //startSender();
         new Thread((Runnable) new Printer(PORTA)).start();
         
-            Relogios.relogiosDistribuidos = new Relogios[6];
+            Relogios.relogiosDistribuidos = new Relogios[3];
 
             for(int i = 0; i < Relogios.relogiosDistribuidos.length; i++){
-                Relogios.relogiosDistribuidos[i] = new Relogios(i);
+                Relogios.relogiosDistribuidos[i] = new Relogios(i, PORTA);
             }
 
-        for (Relogios relogiosDistribuido : Relogios.relogiosDistribuidos) {
-            try {
-                relogiosDistribuido.Initialize();
-            }catch (IOException ex) {
-                Logger.getLogger(ServidorImpressao.class.getName()).log(Level.SEVERE, null, ex);
+            for (Relogios relogiosDistribuido : Relogios.relogiosDistribuidos) {
+                try {
+                    relogiosDistribuido.Initialize();
+                }catch (IOException ex) {
+                    Logger.getLogger(ServidorImpressao.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
     }
 
     

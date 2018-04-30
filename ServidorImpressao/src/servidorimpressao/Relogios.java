@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  * 
  */
 public class Relogios implements Runnable{
+    int PORTA;
     public static Relogios[] relogiosDistribuidos;
     public int id;
     public Random registrador;
@@ -29,8 +30,9 @@ public class Relogios implements Runnable{
     boolean permissaoParaImprimir;
     boolean esperandoResposta;
     
-    public Relogios(int id){
+    public Relogios(int id, int PORTA){
         this.id=id;
+        this.PORTA = PORTA;
         registrador = new Random();
         tempoInicio = System.currentTimeMillis();
         permissaoParaImprimir = false;
@@ -38,7 +40,7 @@ public class Relogios implements Runnable{
     public void Initialize() throws IOException{
         permissao = new int[Relogios.relogiosDistribuidos.length];
 
-        listener = new Listener(this);
+        listener = new Listener(this, PORTA);
         new Thread(listener).start();
         new Thread(this).start();
     }
@@ -69,7 +71,7 @@ public class Relogios implements Runnable{
             }
             String texto = "";
             
-            texto += "id: "+id+"\nport: " + (2626+id) + "\n"+"Numero aleatorio:"+ordemAleatoria;
+            texto += "id: "+id+"\nport: " + (PORTA + id) + "\n"+"Numero aleatorio:"+ordemAleatoria;
             texto += "\n";
 
             for(int i = 0; i < permissao.length; i++){
@@ -90,7 +92,7 @@ public class Relogios implements Runnable{
                 permissaoParaImprimir = false;
                 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(5000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Relogios.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -135,7 +137,7 @@ public class Relogios implements Runnable{
             String resposta;
             BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
             
-            Socket clientSocket = new Socket("localhost", 2625);
+            Socket clientSocket = new Socket("localhost", PORTA+1);
             
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

@@ -20,16 +20,10 @@ public class Printer implements Runnable{
     
     Printer(int port){
         try {
-            this.socket = new ServerSocket(port);
+            this.socket = new ServerSocket(port+1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void print(int id) throws IOException {
-        this.out.println("print," + id);
-        this.out.close();
-        this.socket.close();
     }
     
     @Override
@@ -42,12 +36,18 @@ public class Printer implements Runnable{
                 DataOutputStream mensagemParaEnviar = new DataOutputStream(connectionSocket.getOutputStream());
                 
                 String clientSentence = mensagemRecebida.readLine();
+                
+                for(int i = 0; i < clientSentence.length(); i++){
+                    Thread.sleep(500);
+                }
 
                 mensagemParaEnviar.writeBytes("ack" + "\n");
             }
         } catch (IOException ex) {
             Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Printer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -8,13 +8,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 // classe que vai escutar os outros clientes que vai
 public class Listener  implements Runnable{
+    int PORTA;
     Relogios relogioAtual;
     ServerSocket server;
 
-    public Listener(Relogios other) throws IOException {
+    public Listener(Relogios relogio, int PORTA) throws IOException {
         try {
-            this.relogioAtual = other;
-            server=new ServerSocket(500+other.id);
+            this.PORTA = PORTA;
+            this.relogioAtual = relogio;
+            server=new ServerSocket(this.PORTA + relogio.id);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,7 +33,6 @@ public class Listener  implements Runnable{
                 DataOutputStream outToClient = new DataOutputStream(session.getOutputStream());
                 
                 String clientSentence = inFromClient.readLine();
-                //System.out.println("Received: " + clientSentence);
                 
                 String resposta;
                 
