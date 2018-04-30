@@ -79,7 +79,7 @@ public class ServidorImpressao {
         //startSender();
         new Thread((Runnable) new Printer(PORTA)).start();
         
-            Relogios.relogiosDistribuidos = new Relogios[3];
+            Relogios.relogiosDistribuidos = new Relogios[1];
 
             for(int i = 0; i < Relogios.relogiosDistribuidos.length; i++){
                 Relogios.relogiosDistribuidos[i] = new Relogios(i, PORTA);

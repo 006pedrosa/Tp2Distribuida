@@ -31,7 +31,7 @@ public class Writer implements Runnable{
             String enviado;
             BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
             
-            Socket socket = new Socket("localhost", PORTA+id);
+            Socket socket = new Socket("localhost", PORTA);
             
             DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));

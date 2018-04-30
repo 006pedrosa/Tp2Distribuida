@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-// classe que vai escutar os outros clientes que vai
+// classe que vai escutar os outros clientes
 public class Listener  implements Runnable{
     int PORTA;
     Relogios relogioAtual;
@@ -16,7 +16,7 @@ public class Listener  implements Runnable{
         try {
             this.PORTA = PORTA;
             this.relogioAtual = relogio;
-            server=new ServerSocket(this.PORTA + relogio.id);
+            server=new ServerSocket(relogio.id, this.PORTA);
         } catch (IOException e) {
             e.printStackTrace();
         }
