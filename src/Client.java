@@ -4,12 +4,12 @@ import java.io.IOException;
 public class Client implements Runnable {
 
     public static Client[] otheClients;
-    public int id;
+    public String id;
     public Listener listener;
-    public Client(int id){
+    public Client(String id, int port){
         this.id=id;
         try {
-            this.listener=new Listener(this);
+            this.listener=new Listener(this, port);
             new Thread(listener).start();
             new Thread(this).start();
 

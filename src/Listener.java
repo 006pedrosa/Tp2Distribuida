@@ -6,9 +6,9 @@ public class Listener  implements Runnable{
 
     ServerSocket server;
 
-    public Listener(Client other) throws IOException {
+    public Listener(Client other, int port) throws IOException {
         try {
-            server=new ServerSocket(500+other.id);
+            server=new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
