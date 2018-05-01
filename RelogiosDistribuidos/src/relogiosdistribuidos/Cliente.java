@@ -32,7 +32,7 @@ public class Cliente implements Runnable {
         new Thread(this).start();
 
         
-        for(int i=0; i<256; i++){
+        for(int i=0; i<100; i++){
             newNo = new JoinNetwork(this, i);
             new Thread(newNo).start();
         }
