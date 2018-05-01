@@ -17,6 +17,9 @@ public class LeaveNetwork implements Runnable {
     public void run() {
         while (true) {
             this.cliente.clientesNaRede.forEach((keyIp, socket) -> {
+                if(socket.isConnected()){
+                    System.out.println("CLOSED: " + socket.isClosed() + " CONNECTED: " + socket.isConnected() );
+                }
                 if (socket.isClosed()){
                     this.cliente.clientesNaRede.remove(socket.getInetAddress().getHostAddress());
                     System.out.println("No com o ip: " + socket.getInetAddress().getHostAddress() + " desconectou da rede.");
