@@ -8,6 +8,7 @@ package relogiosdistribuidos;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +36,19 @@ public class Listener implements Runnable{
                 Socket conexao = socketEscuta.accept();
                 String ipVizinho = conexao.getInetAddress().getHostAddress();
                 System.out.println("Nova conexão com o cliente " + ipVizinho);
+                Scanner tipoMensagem = new Scanner(conexao.getInputStream());
+                
+                if(tipoMensagem.hasNextLine()){
+                    String tipo = tipoMensagem.nextLine();
+                    
+                    switch (tipo){
+                        case "NEW":
+                            this.cliente.clientesNaRede.put(ipVizinho, conexao);
+                            System.out.println("INSERIU VIZINHO NO MAPA");
+                        default:
+                            break;
+                    }
+                }
                 
             } catch (IOException ex) {
                 Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);

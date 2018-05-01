@@ -6,11 +6,12 @@
 package relogiosdistribuidos;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.util.HashMap;
 
 public class Cliente implements Runnable {
 
-    public HashMap<String, Cliente> clientesNaRede;
+    public HashMap<String, Socket> clientesNaRede;
     public String ipRede;
     public String digitosFinaisIp;
     public boolean permissaoParaEscrever;
@@ -32,7 +33,7 @@ public class Cliente implements Runnable {
         new Thread(this).start();
 
         
-        for(int i=0; i<100; i++){
+        for(int i=0; i<256; i++){
             newNo = new JoinNetwork(this, i);
             new Thread(newNo).start();
         }

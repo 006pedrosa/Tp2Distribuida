@@ -6,6 +6,7 @@
 package relogiosdistribuidos;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,16 +22,17 @@ public class JoinNetwork implements Runnable{
     
     @Override
     public void run() {
-//        for(int i=10; i<256; i++){
             if( this.ultimosDigitos != Integer.parseInt(this.clienteLocal.digitosFinaisIp)) {
                 try {
-                    System.out.println("ENVIANDO MENSAGEM PARA IP: " + "192.168.0." + Integer.toString(this.ultimosDigitos) );
+                    //System.out.println("ENVIANDO MENSAGEM PARA IP: " + "192.168.0." + Integer.toString(this.ultimosDigitos) );
                     Socket socket = new Socket("192.168.0." + Integer.toString(this.ultimosDigitos), this.clienteLocal.portaEscuta);
+                    if (socket.isConnected()){
+                        new PrintStream(socket.getOutputStream()).println("NEW");
+                    }
                 } catch (IOException ex) {
                     // do nothing
                 }
             }
-        //} 
     }
     
 }
