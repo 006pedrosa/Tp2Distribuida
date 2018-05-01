@@ -13,7 +13,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Listener implements Runnable{
+public class Listener implements Runnable {
+
     public int PORTA;
     Cliente cliente;
     ServerSocket socketEscuta;
@@ -21,15 +22,15 @@ public class Listener implements Runnable{
     public Listener(Cliente cliente, int porta) throws IOException {
         this.PORTA = porta;
         this.cliente = cliente;
-        try{
+        try {
             System.out.println("INICIANDO ESCUTA PELA PORTA: " + this.PORTA);
             this.socketEscuta = new ServerSocket(this.PORTA);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
-    
+
     @Override
     public void run() {
         while (true) {
@@ -38,23 +39,27 @@ public class Listener implements Runnable{
                 String ipVizinho = conexao.getInetAddress().getHostAddress();
                 System.out.println("Nova conexão com o cliente " + ipVizinho);
                 Scanner tipoMensagem = new Scanner(conexao.getInputStream());
-                
-                if(tipoMensagem.hasNextLine()){
+
+                if (tipoMensagem.hasNextLine()) {
                     String tipo = tipoMensagem.nextLine();
-                    
-                    switch (tipo){
+
+                    switch (tipo) {
                         case "NEW":
                             this.cliente.clientesNaRede.put(ipVizinho, conexao);
                             System.out.println("INSERIU VIZINHO NO MAPA");
+                            System.out.println("LISTA DE TODOS OS VIZINHOS: ");
+                            cliente.clientesNaRede.forEach((keyIp, socket) -> {
+                                System.out.println("IP: " + keyIp + " socket ip: " + socket.getInetAddress().getHostAddress());
+                            });
                         default:
                             break;
                     }
                 }
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
 }
