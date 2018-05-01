@@ -19,7 +19,7 @@ public class RelogiosDistribuidos {
         
         Scanner ler = new Scanner(System.in);
         String ip = ler.nextLine();
-        Cliente cliente = new Cliente(ip, 2729);
+        Cliente cliente = new Cliente(ip, 5555);
         
     }
     

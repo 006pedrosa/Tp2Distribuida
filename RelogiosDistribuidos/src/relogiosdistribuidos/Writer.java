@@ -24,6 +24,7 @@ public class Writer implements Runnable{
     @Override
     public void run() {
         try {
+            System.out.println("TENTANDO ACESSAR O IP: " + this.ip + " NA PORTA: " + this.PORTA);
             socket = new Socket(this.ip, this.PORTA);
         } catch (IOException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
