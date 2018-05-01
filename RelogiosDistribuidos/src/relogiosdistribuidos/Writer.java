@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Writer implements Runnable{
-    private static String ip;
-    private static int PORTA;
+    public String ip;
+    public int PORTA;
     Socket socket;
 
     public Writer(String ip, int porta) {

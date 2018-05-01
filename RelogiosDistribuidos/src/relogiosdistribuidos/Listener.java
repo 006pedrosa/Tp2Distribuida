@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Listener implements Runnable{
-    private static int PORTA;
+    public int PORTA;
     Cliente cliente;
     ServerSocket socketEscuta;
 
