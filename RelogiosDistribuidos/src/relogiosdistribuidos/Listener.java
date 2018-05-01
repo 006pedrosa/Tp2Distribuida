@@ -13,10 +13,12 @@ import java.util.logging.Logger;
 
 public class Listener implements Runnable{
     private static int PORTA;
+    Cliente cliente;
     ServerSocket socketEscuta;
 
-    public Listener(int porta) throws IOException {
+    public Listener(Cliente cliente, int porta) throws IOException {
         this.PORTA = porta;
+        this.cliente = cliente;
         try{
             System.out.println("INICIANDO ESCUTA PELA PORTA: " + this.PORTA);
             this.socketEscuta = new ServerSocket(this.PORTA);
@@ -31,7 +33,8 @@ public class Listener implements Runnable{
         while (true) {
             try {
                 Socket conexao = socketEscuta.accept();
-                System.out.println("Nova conexão com o cliente " + conexao.getInetAddress().getHostAddress());
+                String ipVizinho = conexao.getInetAddress().getHostAddress();
+                System.out.println("Nova conexão com o cliente " + ipVizinho);
                 
             } catch (IOException ex) {
                 Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
