@@ -31,6 +31,7 @@ public class Cliente implements Runnable{
     public void run() {
         while (true){
             writer = new Writer(this.ip, this.portaEscuta);
+            new Thread(writer).start();
         }
     }
     
