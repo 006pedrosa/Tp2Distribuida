@@ -38,6 +38,10 @@ public class Cliente implements Runnable {
             newNo = new JoinNetwork(this, i);
             new Thread(newNo).start();
         }
+        
+        clientesNaRede.forEach((keyIp, socket)->{
+            System.out.println("IP: " + keyIp + " socket ip: " + socket.getInetAddress().getHostAddress());
+        });
     }
 
     @Override
