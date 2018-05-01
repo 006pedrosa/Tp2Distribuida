@@ -5,6 +5,7 @@
  */
 package relogiosdistribuidos;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Cliente implements Runnable{
@@ -16,11 +17,11 @@ public class Cliente implements Runnable{
     private Writer writer;
    
 
-    public Cliente(String ip, int porta) {
+    public Cliente(String ip, int porta) throws IOException {
         permissaoParaEscrever = false;
         this.ip = ip;
         this.portaEscuta = porta;
-        listener = new Listener(this.ip, portaEscuta);
+        listener = new Listener(this.portaEscuta);
         new Thread(listener).start();
         writer = new Writer(this.ip, this.portaEscuta);
         new Thread(writer).start();

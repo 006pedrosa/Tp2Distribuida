@@ -25,14 +25,6 @@ public class Listener implements Runnable{
         }
         
     }
-
-    Listener(Cliente aThis, int portaEscuta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    Listener(String ip, int portaEscuta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     @Override
     public void run() {
