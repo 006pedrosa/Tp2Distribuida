@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package relogiosdistribuidos;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -14,7 +15,7 @@ public class RelogiosDistribuidos {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         
         Scanner ler = new Scanner(System.in);
         String ip = ler.nextLine();

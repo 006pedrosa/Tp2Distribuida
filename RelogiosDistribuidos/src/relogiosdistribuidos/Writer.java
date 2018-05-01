@@ -29,5 +29,20 @@ public class Writer implements Runnable{
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    private void conexao(int ultimosDigitos) throws IOException {
+        if(ultimosDigitos > 255){
+            return;
+        }
+        try{
+            String [] teste = ip.split(".");
+            if(teste[3] != Integer.toString(ultimosDigitos)){
+                socket = new Socket("192.168.0." + ultimosDigitos, this.PORTA);   
+            }
+        } catch (IOException ex) {
+            conexao(ultimosDigitos+1);
+        }
+    }
+    
     
 }

@@ -23,14 +23,15 @@ public class Cliente implements Runnable{
         this.portaEscuta = porta;
         listener = new Listener(this.portaEscuta);
         new Thread(listener).start();
-        writer = new Writer(this.ip, this.portaEscuta);
-        new Thread(writer).start();
+        new Thread(this).start();
     }
     
     
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while (true){
+            writer = new Writer(this.ip, this.portaEscuta);
+        }
     }
     
 }
