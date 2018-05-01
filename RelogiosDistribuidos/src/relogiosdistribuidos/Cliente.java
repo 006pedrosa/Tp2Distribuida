@@ -22,6 +22,7 @@ public class Cliente implements Runnable {
 
     public Cliente(String ip, int porta) throws IOException {
         permissaoParaEscrever = false;
+        clientesNaRede = new HashMap<String, Socket>();
 
         String[] ipDividido = ip.split("\\.");
         this.ipRede = ipDividido[0] + "." + ipDividido[1] + "." + ipDividido[2] + ".";
