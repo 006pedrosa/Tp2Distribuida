@@ -8,21 +8,31 @@ package relogiosdistribuidos;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 public class Cliente implements Runnable {
 
     public HashMap<String, Socket> clientesNaRede;
+    public HashMap<String, RequestReply> clientesRequestReply;
+    
     public String ipRede;
     public String digitosFinaisIp;
-    public boolean permissaoParaEscrever;
+    public String estado;
+    Queue<String> filaEscrita;
     public int portaEscuta;
     public Listener listener;
     public Writer writer;
     public JoinNetwork newNo;
+    public LeaveNetwork controleSaidaNo;
 
     public Cliente(String ip, int porta) throws IOException {
-        permissaoParaEscrever = false;
+        estado = "livre";
+        filaEscrita = new LinkedList<String>();
+        
         clientesNaRede = new HashMap<String, Socket>();
+        clientesRequestReply = new HashMap<String, RequestReply>();
 
         String[] ipDividido = ip.split("\\.");
         this.ipRede = ipDividido[0] + "." + ipDividido[1] + "." + ipDividido[2] + ".";
@@ -33,24 +43,25 @@ public class Cliente implements Runnable {
         new Thread(listener).start();
         new Thread(this).start();
 
-        
-        for(int i=0; i<256; i++){
+        for (int i = 0; i < 256; i++) {
             newNo = new JoinNetwork(this, i);
             new Thread(newNo).start();
         }
-        
-        clientesNaRede.forEach((keyIp, socket)->{
+
+        clientesNaRede.forEach((keyIp, socket) -> {
             System.out.println("IP: " + keyIp + " socket ip: " + socket.getInetAddress().getHostAddress());
         });
+        
+        controleSaidaNo = new LeaveNetwork(this);
+        new Thread(controleSaidaNo).start();
+        
     }
 
     @Override
     public void run() {
-//        while (true) {
-//            writer = new Writer(this.ipRede + this.digitosFinaisIp, this.portaEscuta);
-//            new Thread(writer).start();
-//
-//        }
+        //writer = new Writer(this.ipRede + this.digitosFinaisIp, this.portaEscuta, this);
+        //new Thread(writer).start();
+
     }
 
 }

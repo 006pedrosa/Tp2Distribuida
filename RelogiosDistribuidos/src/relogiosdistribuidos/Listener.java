@@ -46,7 +46,9 @@ public class Listener implements Runnable {
                     switch (tipo) {
                         case "NEW":
                             this.cliente.clientesNaRede.put(ipVizinho, conexao);
-                            System.out.println("INSERIU VIZINHO NO MAPA");
+                            this.cliente.clientesRequestReply.put(ipVizinho, new RequestReply());
+                            
+                            System.out.println("INSERIU VIZINHO " + ipVizinho + " NO MAPA");
                             System.out.println("LISTA DE TODOS OS VIZINHOS: ");
                             cliente.clientesNaRede.forEach((keyIp, socket) -> {
                                 System.out.println("IP: " + keyIp + " socket ip: " + socket.getInetAddress().getHostAddress());
