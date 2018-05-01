@@ -14,8 +14,8 @@ import java.util.Queue;
 
 public class Cliente implements Runnable {
 
-    public HashMap<String, Socket> clientesNaRede;
-    public HashMap<String, RequestReply> clientesRequestReply;
+    public static HashMap<String, Socket> clientesNaRede;
+    public static HashMap<String, RequestReply> clientesRequestReply;
     
     public String ipRede;
     public String digitosFinaisIp;
