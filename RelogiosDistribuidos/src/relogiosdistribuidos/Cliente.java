@@ -63,11 +63,11 @@ public class Cliente implements Runnable {
         Random gerador = new Random();
         while (true) {
             // ESPERA UM TEMPO PARA TENTAR ACESSAR A SC
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             if (gerador.nextInt(10) >= 5) {
                 this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -84,7 +84,7 @@ public class Cliente implements Runnable {
 
                     });
 
-                    while (this.respostasReply == this.clientesNaRede.size()) {
+                    while (this.respostasReply != this.clientesNaRede.size()) {
 
                     }
 
