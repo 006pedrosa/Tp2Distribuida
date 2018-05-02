@@ -94,13 +94,13 @@ public class Cliente implements Runnable {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
-                
+
                 this.estado = "LIVRE";
-                this.filaEscrita.forEach((no)->{
-                    writer = new Writer(no.split(",")[0], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[0]), "REPLY");
+                this.filaEscrita.forEach((no) -> {
+                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
                     new Thread(writer).start();
-                }); 
-                
+                });
+
                 this.filaEscrita.clear();
             }
         }
