@@ -10,9 +10,9 @@ public class RequestReply {
     public boolean request;
     public boolean reply;
 
-    public RequestReply() {
-        request = false;
-        reply = false;
+    RequestReply(boolean request, boolean reply) {
+        this.request = request;
+        this.reply = reply;
     }
     
 }
