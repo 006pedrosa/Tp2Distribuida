@@ -32,18 +32,18 @@ public class Writer implements Runnable {
     public void run() {
         try {
             new PrintStream(socket.getOutputStream()).println("REQUEST");
-            new PrintStream(socket.getOutputStream()).println(hsn +"," + ip);
-            
+            new PrintStream(socket.getOutputStream()).println(hsn + "," + ip);
+
             Scanner tipoMensagem = new Scanner(socket.getInputStream());
-            
-            if (tipoMensagem.hasNextLine()){
-                if(tipoMensagem.nextLine() == "REPLY"){
+
+            if (tipoMensagem.hasNextLine()) {
+                if (tipoMensagem.nextLine() == "REPLY") {
                     cliente.respostasReply++;
                     cliente.respostas++;
-                }else if (tipoMensagem.nextLine() == "RETORNO"){
+                } else if (tipoMensagem.nextLine() == "RETORNO") {
                     cliente.respostas++;
                 }
-            } 
+            }
         } catch (IOException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,8 +5,8 @@
  */
 package relogiosdistribuidos;
 
-
 public class RequestReply {
+
     public boolean request;
     public boolean reply;
 
@@ -14,5 +14,5 @@ public class RequestReply {
         this.request = request;
         this.reply = reply;
     }
-    
+
 }

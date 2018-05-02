@@ -15,7 +15,7 @@ public class RelogiosDistribuidos {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        
+
         Scanner ler = new Scanner(System.in);
         String ip = ler.nextLine();
         Cliente cliente = new Cliente(ip, 5555);
