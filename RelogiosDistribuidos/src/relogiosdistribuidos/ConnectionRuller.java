@@ -77,6 +77,9 @@ public class ConnectionRuller implements Runnable {
             }
 
         }
+        
+        System.out.println("NO: " + this.cliente.ipRede + this.cliente.digitosFinaisIp + " SE DESCONECTOU DA REDE");
+        this.cliente.clientesNaRede.remove(this.socket);
     }
 
 }
