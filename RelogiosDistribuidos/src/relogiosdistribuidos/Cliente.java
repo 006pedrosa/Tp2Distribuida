@@ -84,7 +84,7 @@ public class Cliente implements Runnable {
 
                     });
 
-                    while (this.respostasReply != this.clientesNaRede.size()) {
+                    while (this.respostasReply < this.clientesNaRede.size()) {
 
                     }
 
