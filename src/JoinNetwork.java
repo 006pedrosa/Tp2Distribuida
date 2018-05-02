@@ -25,11 +25,10 @@ public class JoinNetwork implements Runnable {
         if (this.ultimosDigitos != Integer.parseInt(this.clienteLocal.digitosFinaisIp)) {
             try {
                 //System.out.println("ENVIANDO MENSAGEM PARA IP: " + "192.168.0." + Integer.toString(this.ultimosDigitos) );
-                Socket socket = new Socket("192.168.0." + Integer.toString(this.ultimosDigitos), this.clienteLocal.portaEscuta);
+                Socket socket = new Socket(this.clienteLocal.ipRede + Integer.toString(this.ultimosDigitos), this.clienteLocal.portaEscuta);
                 if (socket.isConnected()) {
                     new PrintStream(socket.getOutputStream()).println("NEW");
                     this.clienteLocal.clientesNaRede.put(socket.getInetAddress().getHostAddress(), socket);
-                    this.clienteLocal.clientesRequestReply.put(socket.getInetAddress().getHostAddress(), new RequestReply(false, false));
                 }
             } catch (IOException ex) {
                 // do nothing

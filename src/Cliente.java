@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 public class Cliente implements Runnable {
 
     public HashMap<String, Socket> clientesNaRede;
-    public HashMap<String, RequestReply> clientesRequestReply;
 
     public String ipRede;
     public String digitosFinaisIp;
@@ -30,14 +29,12 @@ public class Cliente implements Runnable {
     public Listener listener;
     public Writer writer;
     public JoinNetwork newNo;
-    public LeaveNetwork controleSaidaNo;
 
     public Cliente(String ip, int porta) throws IOException {
         estado = "LIVRE";
         filaEscrita = new ArrayList<String>();
 
         clientesNaRede = new HashMap<String, Socket>();
-        clientesRequestReply = new HashMap<String, RequestReply>();
 
         String[] ipDividido = ip.split("\\.");
         this.ipRede = ipDividido[0] + "." + ipDividido[1] + "." + ipDividido[2] + ".";
@@ -57,8 +54,6 @@ public class Cliente implements Runnable {
             System.out.println("IP: " + keyIp + " socket ip: " + socket.getInetAddress().getHostAddress());
         });
 
-//        controleSaidaNo = new LeaveNetwork(this);
-//        new Thread(controleSaidaNo).start();
     }
 
     @Override
@@ -77,7 +72,7 @@ public class Cliente implements Runnable {
 
                 while (permissaoEscrita == false) {
                     this.clientesNaRede.forEach((keyIp, socket) -> {
-                        writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket);
+                        writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
                         new Thread(writer).start();
 
                     });
@@ -93,13 +88,17 @@ public class Cliente implements Runnable {
 
                 this.estado = "OCUPADO";
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(3000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
+                
                 this.estado = "LIVRE";
-                // TODO: TERMINAR CÓDIGO APOS SAIR DA SC 
+                this.filaEscrita.forEach((no)->{
+                    writer = new Writer(no.split(",")[0], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[0]), "REPLY");
+                        new Thread(writer).start();
+                }); 
             }
         }
 
