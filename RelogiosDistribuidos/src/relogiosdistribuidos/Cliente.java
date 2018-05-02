@@ -98,8 +98,10 @@ public class Cliente implements Runnable {
                 this.estado = "LIVRE";
                 this.filaEscrita.forEach((no)->{
                     writer = new Writer(no.split(",")[0], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[0]), "REPLY");
-                        new Thread(writer).start();
+                    new Thread(writer).start();
                 }); 
+                
+                this.filaEscrita.clear();
             }
         }
 
