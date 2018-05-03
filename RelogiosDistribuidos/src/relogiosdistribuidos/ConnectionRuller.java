@@ -89,6 +89,7 @@ public class ConnectionRuller implements Runnable {
                 } else {
                     System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
                     this.cliente.clientesNaRede.remove(this.socket);
+                    this.cliente.respostasReply++;
                     break;
 
                 }
