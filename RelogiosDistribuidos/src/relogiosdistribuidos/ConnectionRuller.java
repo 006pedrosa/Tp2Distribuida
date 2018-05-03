@@ -33,6 +33,15 @@ public class ConnectionRuller implements Runnable {
     public void run() {
         String ipVizinho = this.socket.getInetAddress().getHostAddress();
         System.out.println("Nova conexão com o cliente " + ipVizinho);
+        try {
+            Socket socketConexaoVolta = new Socket(this.socket.getInetAddress().getHostAddress(), this.cliente.portaEscuta);
+            if (socketConexaoVolta.isConnected()) {
+                new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         while (this.socket.isConnected()) {
 
             Scanner tipoMensagem;
