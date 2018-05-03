@@ -15,11 +15,10 @@ import java.util.logging.Logger;
 /**
  *
  * @author pedro
- * 
+ *
  * CLASSE RESPONSÁVEL POR GERENCIAR UMA CONEXÃO COM ALGUM NO DA REDE
- * 
+ *
  */
-
 public class ConnectionRuller implements Runnable {
 
     Socket socket;
@@ -64,7 +63,7 @@ public class ConnectionRuller implements Runnable {
                             } else if (cliente.estado == "OCUPADO") {
                                 cliente.filaEscrita.add(tipo);
                             } else if (cliente.estado == "AGUARDANDO") {
-                                if (Long.parseLong(cliente.filaEscrita.get(0).split(",")[cliente.filaEscrita.size() - 1]) > Long.parseLong(mensagem[0])) {
+                                if (Long.parseLong(cliente.filaEscrita.get(0).split(",")[0]) > Long.parseLong(mensagem[0])) {
                                     cliente.filaEscrita.add(tipo);
                                 } else {
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
@@ -77,9 +76,10 @@ public class ConnectionRuller implements Runnable {
                             break;
                     }
                 } else {
-                    System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
-                    this.cliente.clientesNaRede.remove(this.socket);
+                        System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
+                        this.cliente.clientesNaRede.remove(this.socket);
                     break;
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
