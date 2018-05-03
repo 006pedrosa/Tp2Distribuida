@@ -33,15 +33,7 @@ public class ConnectionRuller implements Runnable {
     public void run() {
         String ipVizinho = this.socket.getInetAddress().getHostAddress();
         System.out.println("Nova conexão com o cliente " + ipVizinho);
-        try {
-            Socket socketConexaoVolta = new Socket(this.socket.getInetAddress().getHostAddress(), this.cliente.portaEscuta);
-            if (socketConexaoVolta.isConnected()) {
-                new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
         while (this.socket.isConnected()) {
 
             Scanner tipoMensagem;
@@ -59,6 +51,16 @@ public class ConnectionRuller implements Runnable {
                             cliente.clientesNaRede.forEach((keyIp, socket) -> {
                                 System.out.println("NO: " + socket.getInetAddress().getHostAddress());
                             });
+                            
+                            // CRIA UMA CONEXAO DE VOLTA
+                            try {
+                                Socket socketConexaoVolta = new Socket(this.socket.getInetAddress().getHostAddress(), this.cliente.portaEscuta);
+                                if (socketConexaoVolta.isConnected()) {
+                                    new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW ANSWER");
+                                }
+                            } catch (IOException ex) {
+                                Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                             break;
                         case "REQUEST":
                             tipo = tipoMensagem.nextLine();
@@ -85,8 +87,8 @@ public class ConnectionRuller implements Runnable {
                             break;
                     }
                 } else {
-                        System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
-                        this.cliente.clientesNaRede.remove(this.socket);
+                    System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
+                    this.cliente.clientesNaRede.remove(this.socket);
                     break;
 
                 }
