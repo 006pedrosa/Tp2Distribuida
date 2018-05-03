@@ -74,7 +74,7 @@ public class ConnectionRuller implements Runnable {
                             } else if (cliente.estado == "OCUPADO") {
                                 cliente.filaEscrita.add(tipo);
                             } else if (cliente.estado == "AGUARDANDO") {
-                                if (Long.parseLong(cliente.filaEscrita.get(0).split(",")[0]) > Long.parseLong(mensagem[0])) {
+                                if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
                                     cliente.filaEscrita.add(tipo);
                                 } else {
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
