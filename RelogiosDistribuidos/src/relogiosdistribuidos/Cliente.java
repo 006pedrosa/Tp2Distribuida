@@ -62,6 +62,7 @@ public class Cliente implements Runnable {
         boolean permissaoEscrita;
         Random gerador = new Random();
         while (true) {
+            this.estado = "LIVRE";
             if (gerador.nextInt(10) >= 5) {
 //                this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
