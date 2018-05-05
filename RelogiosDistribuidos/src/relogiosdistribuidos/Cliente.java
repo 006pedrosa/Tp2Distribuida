@@ -66,7 +66,7 @@ public class Cliente implements Runnable {
 //                this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 this.estado = "AGUARDANDO";
-                this.hsn = Long.toString(timestamp.getTime()+1000 + timestamp.getNanos() + 1);
+                this.hsn = Long.toString(timestamp.getTime()*1000 + timestamp.getNanos() + 1);
                 permissaoEscrita = false;
 //                this.respostas = 0;
                 //this.respostasReply = 0;
