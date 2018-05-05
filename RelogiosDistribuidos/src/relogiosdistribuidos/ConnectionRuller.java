@@ -74,45 +74,45 @@ public class ConnectionRuller implements Runnable {
                             if (this.cliente.estado == "LIVRE") {
                                 new PrintStream(this.socket.getOutputStream()).println("REPLY");
                             } else if (cliente.estado == "OCUPADO") {
-                                //this.cliente.filaEscrita.add(tipo);
-                                while (this.cliente.estado != "LIVRE") {
-                                    System.out.println("ENTROU COMO: OCUPADO - ESTA COMO: " + this.cliente.estado);
-                                    System.out.println("MEU HSN: " + this.cliente.hsn + " HSN DO VIZINHO " + mensagem[1] + " :" + mensagem[0]);
-                                    Thread.sleep(5000);
-                                }
-                                new PrintStream(this.socket.getOutputStream()).println("REPLY");
+                                this.cliente.filaEscrita.add(tipo);
+//                                while (this.cliente.estado != "LIVRE") {
+//                                    System.out.println("ENTROU COMO: OCUPADO - ESTA COMO: " + this.cliente.estado);
+//                                    System.out.println("MEU HSN: " + this.cliente.hsn + " HSN DO VIZINHO " + mensagem[1] + " :" + mensagem[0]);
+//                                    Thread.sleep(5000);
+//                                }
+//                                new PrintStream(this.socket.getOutputStream()).println("REPLY");
                             } else if (this.cliente.estado == "AGUARDANDO") {
                                 if (Long.parseLong(this.cliente.hsn) <= Long.parseLong(mensagem[0])) {
-//                                    this.cliente.respostasReply++;
-//                                    this.cliente.filaEscrita.add(tipo);
-                                    while (this.cliente.estado != "LIVRE") {
-                                        System.out.println("ENTROU COMO: AGUARDANDO - ESTA COMO: " + this.cliente.estado);
-                                        System.out.println("MEU HSN: " + this.cliente.hsn + " HSN DO VIZINHO " + mensagem[1] + " :" + mensagem[0]);
-                                        Thread.sleep(5000);
-                                    }
-                                    new PrintStream(this.socket.getOutputStream()).println("REPLY");
+                                    this.cliente.respostasReply++;
+                                    this.cliente.filaEscrita.add(tipo);
+//                                    while (this.cliente.estado != "LIVRE") {
+//                                        System.out.println("ENTROU COMO: AGUARDANDO - ESTA COMO: " + this.cliente.estado);
+//                                        System.out.println("MEU HSN: " + this.cliente.hsn + " HSN DO VIZINHO " + mensagem[1] + " :" + mensagem[0]);
+//                                        Thread.sleep(5000);
+//                                    }
+//                                    new PrintStream(this.socket.getOutputStream()).println("REPLY");
                                 } else {
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
                                 }
                             }
                             break;
                         case "REPLY":
-                            //this.cliente.respostasReply++;
+                            this.cliente.respostasReply++;
                         default:
                             break;
                     }
                 } else {
                     System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
                     this.cliente.clientesNaRede.remove(this.socket);
-                    //this.cliente.respostasReply++;
+                    this.cliente.respostasReply++;
                     break;
 
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } // catch (InterruptedException ex) {
+//                Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
         }
 

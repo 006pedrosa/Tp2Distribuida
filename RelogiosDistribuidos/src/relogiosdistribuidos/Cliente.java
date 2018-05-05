@@ -23,9 +23,9 @@ public class Cliente implements Runnable {
     public String estado;
     public String hsn;
 
-//    public int respostasReply;
+    public int respostasReply;
 //    public int respostas;
-//    ArrayList<String> filaEscrita;
+    ArrayList<String> filaEscrita;
     public int portaEscuta;
     public Listener listener;
     public Writer writer;
@@ -33,7 +33,7 @@ public class Cliente implements Runnable {
 
     public Cliente(String ip, int porta) throws IOException {
         estado = "LIVRE";
-//        filaEscrita = new ArrayList<String>();
+        filaEscrita = new ArrayList<String>();
 
         clientesNaRede = new HashMap<String, Socket>();
 
@@ -68,41 +68,46 @@ public class Cliente implements Runnable {
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA AGUARDANDO");
                 this.estado = "AGUARDANDO";
-                this.hsn = Long.toString(timestamp.getTime()*1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(999999) +  + 1);
+                this.hsn = Long.toString(timestamp.getTime() * 1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(999999) + +1);
                 permissaoEscrita = false;
 //                this.respostas = 0;
-                //this.respostasReply = 0;
+                this.respostasReply = 0;
 
                 this.clientesNaRede.forEach((keyIp, socket) -> {
                     writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
                     Thread t = new Thread(writer);
                     t.start();
-                    try {
-                        t.join();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+//                    try {
+//                        t.join();
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
 
                 });
-                
+
+                while (this.respostasReply < this.clientesNaRede.size()) {
+
+                }
+
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA OCUPADO");
                 this.estado = "OCUPADO";
 
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
-                
+
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA LIVRE");
                 this.estado = "LIVRE";
+
+                this.filaEscrita.forEach((no) -> {
+                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
+                    new Thread(writer).start();
+                });
+
+                this.filaEscrita.clear();
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
-//                this.filaEscrita.forEach((no) -> {
-//                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
-//                    new Thread(writer).start();
-//                });
-//
-//                this.filaEscrita.clear();
             }
         }
 
