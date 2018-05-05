@@ -78,7 +78,7 @@ public class ConnectionRuller implements Runnable {
                                 while (this.cliente.estado != "LIVRE") {
                                     System.out.println("ENTROU COMO: OCUPADO - ESTA COMO: " + this.cliente.estado);
                                     System.out.println("MEU HSN: " + this.cliente.hsn + " HSN DO VIZINHO " + mensagem[1] + " :" + mensagem[0]);
-                                    Thread.sleep(1000);
+                                    Thread.sleep(5000);
                                 }
                                 new PrintStream(this.socket.getOutputStream()).println("REPLY");
                             } else if (this.cliente.estado == "AGUARDANDO") {
@@ -88,7 +88,7 @@ public class ConnectionRuller implements Runnable {
                                     while (this.cliente.estado != "LIVRE") {
                                         System.out.println("ENTROU COMO: AGUARDANDO - ESTA COMO: " + this.cliente.estado);
                                         System.out.println("MEU HSN: " + this.cliente.hsn + " HSN DO VIZINHO " + mensagem[1] + " :" + mensagem[0]);
-                                        Thread.sleep(1000);
+                                        Thread.sleep(5000);
                                     }
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
                                 } else {

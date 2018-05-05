@@ -93,7 +93,7 @@ public class Cliente implements Runnable {
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA LIVRE");
                 this.estado = "LIVRE";
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
