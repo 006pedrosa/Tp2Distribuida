@@ -16,6 +16,8 @@ public class RelogiosDistribuidos {
      */
     public static void main(String[] args) throws IOException {
 
+        System.out.println("INSIRA O IP DA SUA MAQUINA");
+        
         Scanner ler = new Scanner(System.in);
         String ip = ler.nextLine();
         Cliente cliente = new Cliente(ip, 5555);
