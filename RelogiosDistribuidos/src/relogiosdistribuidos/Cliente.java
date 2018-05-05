@@ -87,15 +87,16 @@ public class Cliente implements Runnable {
                 
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA OCUPADO");
                 this.estado = "OCUPADO";
-//                try {
-//                    Thread.sleep(3000);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
                 
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA LIVRE");
                 this.estado = "LIVRE";
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
 //                this.filaEscrita.forEach((no) -> {
 //                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
 //                    new Thread(writer).start();
