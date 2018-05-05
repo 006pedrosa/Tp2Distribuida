@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package relogiosdistribuidos;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -11,7 +10,9 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/*
+* CLASSE RESPONSAVEL POR ESCREVER PRINTAR NA TELA
+* */
 public class Writer implements Runnable {
 
     public String ip;

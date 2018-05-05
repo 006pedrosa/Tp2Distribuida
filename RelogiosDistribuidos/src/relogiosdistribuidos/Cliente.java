@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package relogiosdistribuidos;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -14,6 +8,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+* classew responsavel por manter o listener ativo na porta da rede e executar os tratamentos da area critica
+* */
 public class Cliente implements Runnable {
 
     public HashMap<String, Socket> clientesNaRede;
@@ -30,7 +27,7 @@ public class Cliente implements Runnable {
     public Listener listener;
     public Writer writer;
     public JoinNetwork newNo;
-
+    // construtor
     public Cliente(String ip, int porta) throws IOException {
         estado = "LIVRE";
 //        filaEscrita = new ArrayList<String>();
@@ -58,21 +55,19 @@ public class Cliente implements Runnable {
     }
 
     @Override
+    // fução que executa o cliente
     public void run() {
         boolean permissaoEscrita;
         Random gerador = new Random();
         while (true) {
             this.estado = "LIVRE";
+
             if (gerador.nextInt(10) >= 5) {
-//                this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA AGUARDANDO");
                 this.estado = "AGUARDANDO";
                 this.hsn = Long.toString(timestamp.getTime() * 1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(999999) + +1);
                 permissaoEscrita = false;
-//                this.respostas = 0;
-//                this.respostasReply = 0;
-
                 this.clientesNaRede.forEach((keyIp, socket) -> {
                     writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
                     Thread t = new Thread(writer);
@@ -84,11 +79,6 @@ public class Cliente implements Runnable {
                     }
 
                 });
-
-//                while (this.respostasReply < this.clientesNaRede.size()) {
-//
-//                }
-
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA OCUPADO");
                 this.estado = "OCUPADO";
 
@@ -96,13 +86,6 @@ public class Cliente implements Runnable {
 
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA LIVRE");
                 this.estado = "LIVRE";
-
-//                this.filaEscrita.forEach((no) -> {
-//                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
-//                    new Thread(writer).start();
-//                });
-//
-//                this.filaEscrita.clear();
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException ex) {

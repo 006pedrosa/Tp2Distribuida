@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package relogiosdistribuidos;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Scanner;
-
+/*
+CLASSE MAIN DA APLICAÇÃO
+ */
 public class RelogiosDistribuidos {
 
     /**

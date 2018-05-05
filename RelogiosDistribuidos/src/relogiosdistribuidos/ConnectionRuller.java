@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package relogiosdistribuidos;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -14,9 +8,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pedro
  *
- * CLASSE RESPONSÁVEL POR GERENCIAR UMA CONEXÃO COM ALGUM NO DA REDE
+ *
+ * CLASSE RESPONSAVEL POR FAZER O TRATAMENTO DA COMINICAÇÃO ENTRE OS CLIENTES QUE ESTÃO NA REDE
  *
  */
 public class ConnectionRuller implements Runnable {
@@ -41,10 +35,9 @@ public class ConnectionRuller implements Runnable {
                 tipoMensagem = new Scanner(this.socket.getInputStream());
                 if (tipoMensagem.hasNextLine()) {
                     String tipo = tipoMensagem.nextLine();
-
+                    // responnsavel por tratar as mensagens recebidas
                     switch (tipo) {
                         case "NEW":
-
                             // CRIA UMA CONEXAO DE VOLTA
                             try {
                                 Socket socketConexaoVolta = new Socket(this.socket.getInetAddress().getHostAddress(), this.cliente.portaEscuta);
@@ -63,15 +56,12 @@ public class ConnectionRuller implements Runnable {
                                 Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             break;
+                        //responsavel por verificar quem tem a prioridade de acesso a escrita
                         case "REQUEST":
                             String hsnMomento = this.cliente.hsn;
                             tipo = tipoMensagem.nextLine();
                             String[] mensagem = tipo.split(",");
                             System.out.println(mensagem[0]);
-//                            if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
-//                                cliente.hsn = mensagem[0];
-//                            }
-
                             if (this.cliente.estado == "LIVRE") {
                                 new PrintStream(this.socket.getOutputStream()).println("REPLY");
                             } else if (cliente.estado == "OCUPADO") {
@@ -103,6 +93,7 @@ public class ConnectionRuller implements Runnable {
                             break;
                     }
                 } else {
+                    //acionado caso um cliente seja desconectado
                     System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
                     this.cliente.clientesNaRede.remove(this.socket);
 //                    this.cliente.respostasReply++;

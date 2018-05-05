@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/*
+* CLASSE RESPONSAVEL P0R VERIFICAR A SAIDA
+* */
 public class LeaveNetwork implements Runnable {
 
     Cliente cliente;

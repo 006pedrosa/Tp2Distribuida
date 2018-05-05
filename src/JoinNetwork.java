@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
-
+/*
+* CLASSE RESPONSAVEL POR ADICIONAR OS OUTROS CLIENTES NA REDE
+* */
 public class JoinNetwork implements Runnable {
 
     Cliente clienteLocal;

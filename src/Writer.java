@@ -10,7 +10,9 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/*
+* CLASSE RESPONSAVEL POR ESCREVER PRINTAR NA TELA
+* */
 public class Writer implements Runnable {
 
     public String ip;
@@ -34,13 +36,13 @@ public class Writer implements Runnable {
         try {
             if(this.tipoMensagem == "REQUEST"){
                 new PrintStream(this.socket.getOutputStream()).println("REQUEST");
-                new PrintStream(this.socket.getOutputStream()).println(hsn + "," + ip);
+                new PrintStream(this.socket.getOutputStream()).println(this.hsn + "," + this.cliente.ipRede + this.cliente.digitosFinaisIp);
 
                 Scanner tipoMensagem = new Scanner(this.socket.getInputStream());
 
                 if (tipoMensagem.hasNextLine()) {
                     if (tipoMensagem.nextLine() == "REPLY") {
-                        //cliente.respostasReply++;    
+//                        cliente.respostasReply++;    
                     }
                 }
             }else if(this.tipoMensagem == "REPLY"){
