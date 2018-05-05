@@ -61,6 +61,12 @@ public class Cliente implements Runnable {
         boolean permissaoEscrita;
         Random gerador = new Random();
         while (true) {
+            // ESPERA UM TEMPO PARA TENTAR ACESSAR A SC
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             if (gerador.nextInt(10) >= 5) {
                 this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -77,7 +83,7 @@ public class Cliente implements Runnable {
 
                     });
 
-                    while (this.respostas != this.clientesNaRede.size()) {
+                    while (this.respostasReply < this.clientesNaRede.size()) {
 
                     }
 
@@ -93,12 +99,14 @@ public class Cliente implements Runnable {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
-                
+
                 this.estado = "LIVRE";
-                this.filaEscrita.forEach((no)->{
-                    writer = new Writer(no.split(",")[0], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[0]), "REPLY");
-                        new Thread(writer).start();
-                }); 
+                this.filaEscrita.forEach((no) -> {
+                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
+                    new Thread(writer).start();
+                });
+
+                this.filaEscrita.clear();
             }
         }
 
