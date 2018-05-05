@@ -76,7 +76,8 @@ public class ConnectionRuller implements Runnable {
                             } else if (cliente.estado == "OCUPADO") {
                                 //this.cliente.filaEscrita.add(tipo);
                                 while (this.cliente.estado != "LIVRE") {
-
+                                    System.out.println("ENTROU COMO: OCUPADO - ESTA COMO: " + this.cliente.estado);
+                                    Thread.sleep(5000);
                                 }
                                 new PrintStream(this.socket.getOutputStream()).println("REPLY");
                             } else if (this.cliente.estado == "AGUARDANDO") {
@@ -84,7 +85,8 @@ public class ConnectionRuller implements Runnable {
 //                                    this.cliente.respostasReply++;
 //                                    this.cliente.filaEscrita.add(tipo);
                                     while (this.cliente.estado != "LIVRE") {
-
+                                        System.out.println("ENTROU COMO: AGUARDANDO - ESTA COMO: " + this.cliente.estado);
+                                        Thread.sleep(5000);
                                     }
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
                                 } else {
@@ -105,6 +107,8 @@ public class ConnectionRuller implements Runnable {
 
                 }
             } catch (IOException ex) {
+                Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
             }
 

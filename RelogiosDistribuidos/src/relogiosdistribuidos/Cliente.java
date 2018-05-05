@@ -66,6 +66,7 @@ public class Cliente implements Runnable {
             if (gerador.nextInt(10) >= 5) {
 //                this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA AGUARDANDO");
                 this.estado = "AGUARDANDO";
                 this.hsn = Long.toString(timestamp.getTime()*1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(500) +  + 1);
                 permissaoEscrita = false;
@@ -83,7 +84,8 @@ public class Cliente implements Runnable {
                     }
 
                 });
-
+                
+                System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA OCUPADO");
                 this.estado = "OCUPADO";
                 try {
                     Thread.sleep(3000);
@@ -91,7 +93,8 @@ public class Cliente implements Runnable {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
-
+                
+                System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA LIVRE");
                 this.estado = "LIVRE";
 //                this.filaEscrita.forEach((no) -> {
 //                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
