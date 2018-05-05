@@ -44,18 +44,19 @@ public class ConnectionRuller implements Runnable {
 
                     switch (tipo) {
                         case "NEW":
-                            this.cliente.clientesNaRede.put(ipVizinho, this.socket);
 
-                            System.out.println("INSERIU VIZINHO " + ipVizinho + " NO MAPA");
-                            System.out.println("LISTA DE TODOS OS VIZINHOS: ");
-                            cliente.clientesNaRede.forEach((keyIp, socket) -> {
-                                System.out.println("NO: " + socket.getInetAddress().getHostAddress());
-                            });
-                            
                             // CRIA UMA CONEXAO DE VOLTA
                             try {
                                 Socket socketConexaoVolta = new Socket(this.socket.getInetAddress().getHostAddress(), this.cliente.portaEscuta);
+
                                 if (socketConexaoVolta.isConnected()) {
+                                    this.cliente.clientesNaRede.put(ipVizinho, socketConexaoVolta);
+
+                                    System.out.println("INSERIU VIZINHO " + ipVizinho + " NO MAPA");
+                                    System.out.println("LISTA DE TODOS OS VIZINHOS: ");
+                                    cliente.clientesNaRede.forEach((keyIp, socket) -> {
+                                        System.out.println("NO: " + socket.getInetAddress().getHostAddress());
+                                    });
                                     new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW ANSWER");
                                 }
                             } catch (IOException ex) {

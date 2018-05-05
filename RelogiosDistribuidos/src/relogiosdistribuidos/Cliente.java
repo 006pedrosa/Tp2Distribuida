@@ -62,12 +62,6 @@ public class Cliente implements Runnable {
         boolean permissaoEscrita;
         Random gerador = new Random();
         while (true) {
-            // ESPERA UM TEMPO PARA TENTAR ACESSAR A SC
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-//            }
             if (gerador.nextInt(10) >= 5) {
                 this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -77,20 +71,14 @@ public class Cliente implements Runnable {
                 this.respostas = 0;
                 this.respostasReply = 0;
 
-                while (permissaoEscrita == false) {
-                    this.clientesNaRede.forEach((keyIp, socket) -> {
-                        writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
-                        new Thread(writer).start();
+                this.clientesNaRede.forEach((keyIp, socket) -> {
+                    writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
+                    new Thread(writer).start();
 
-                    });
+                });
 
-                    while (this.respostasReply < this.clientesNaRede.size()) {
+                while (this.respostasReply < this.clientesNaRede.size()) {
 
-                    }
-
-                    if (this.respostasReply == this.clientesNaRede.size()) {
-                        permissaoEscrita = true;
-                    }
                 }
 
                 this.estado = "OCUPADO";
