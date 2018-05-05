@@ -66,6 +66,7 @@ public class ConnectionRuller implements Runnable {
                         case "REQUEST":
                             tipo = tipoMensagem.nextLine();
                             String[] mensagem = tipo.split(",");
+                            System.out.println(mensagem[0]);
 //                            if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
 //                                cliente.hsn = mensagem[0];
 //                            }
