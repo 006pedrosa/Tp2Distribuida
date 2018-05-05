@@ -54,7 +54,7 @@ public class ConnectionRuller implements Runnable {
 
                                     System.out.println("INSERIU VIZINHO " + ipVizinho + " NO MAPA");
                                     System.out.println("LISTA DE TODOS OS VIZINHOS: ");
-                                    cliente.clientesNaRede.forEach((keyIp, socket) -> {
+                                    this.cliente.clientesNaRede.forEach((keyIp, socket) -> {
                                         System.out.println("NO: " + socket.getInetAddress().getHostAddress());
                                     });
                                     new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW ANSWER");
@@ -70,28 +70,36 @@ public class ConnectionRuller implements Runnable {
 //                                cliente.hsn = mensagem[0];
 //                            }
 
-                            if (cliente.estado == "LIVRE") {
+                            if (this.cliente.estado == "LIVRE") {
                                 new PrintStream(this.socket.getOutputStream()).println("REPLY");
                             } else if (cliente.estado == "OCUPADO") {
-                                cliente.filaEscrita.add(tipo);
-                            } else if (cliente.estado == "AGUARDANDO") {
+                                //this.cliente.filaEscrita.add(tipo);
+                                while (this.cliente.estado != "LIVRE") {
+
+                                }
+                                new PrintStream(this.socket.getOutputStream()).println("REPLY");
+                            } else if (this.cliente.estado == "AGUARDANDO") {
                                 if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
-                                    cliente.respostasReply++;
-                                    cliente.filaEscrita.add(tipo);
+//                                    this.cliente.respostasReply++;
+//                                    this.cliente.filaEscrita.add(tipo);
+                                    while (this.cliente.estado != "LIVRE") {
+
+                                    }
+                                    new PrintStream(this.socket.getOutputStream()).println("REPLY");
                                 } else {
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
                                 }
                             }
                             break;
                         case "REPLY":
-                            this.cliente.respostasReply++;
+                            //this.cliente.respostasReply++;
                         default:
                             break;
                     }
                 } else {
                     System.out.println("NO: " + socket.getInetAddress().getHostAddress() + " SE DESCONECTOU DA REDE");
                     this.cliente.clientesNaRede.remove(this.socket);
-                    this.cliente.respostasReply++;
+                    //this.cliente.respostasReply++;
                     break;
 
                 }

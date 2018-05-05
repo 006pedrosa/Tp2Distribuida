@@ -23,9 +23,9 @@ public class Cliente implements Runnable {
     public String estado;
     public String hsn;
 
-    public int respostasReply;
-    public int respostas;
-    ArrayList<String> filaEscrita;
+//    public int respostasReply;
+//    public int respostas;
+//    ArrayList<String> filaEscrita;
     public int portaEscuta;
     public Listener listener;
     public Writer writer;
@@ -33,7 +33,7 @@ public class Cliente implements Runnable {
 
     public Cliente(String ip, int porta) throws IOException {
         estado = "LIVRE";
-        filaEscrita = new ArrayList<String>();
+//        filaEscrita = new ArrayList<String>();
 
         clientesNaRede = new HashMap<String, Socket>();
 
@@ -63,23 +63,25 @@ public class Cliente implements Runnable {
         Random gerador = new Random();
         while (true) {
             if (gerador.nextInt(10) >= 5) {
-                this.respostas = 0;
+//                this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 this.estado = "AGUARDANDO";
                 this.hsn = Long.toString(timestamp.getTime() + 1);
                 permissaoEscrita = false;
-                this.respostas = 0;
-                this.respostasReply = 0;
+//                this.respostas = 0;
+                //this.respostasReply = 0;
 
                 this.clientesNaRede.forEach((keyIp, socket) -> {
                     writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
-                    new Thread(writer).start();
+                    Thread t = new Thread(writer);
+                    t.start();
+                    try {
+                        t.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
                 });
-
-                while (this.respostasReply < this.clientesNaRede.size()) {
-
-                }
 
                 this.estado = "OCUPADO";
                 try {
@@ -90,12 +92,12 @@ public class Cliente implements Runnable {
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
 
                 this.estado = "LIVRE";
-                this.filaEscrita.forEach((no) -> {
-                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
-                    new Thread(writer).start();
-                });
-
-                this.filaEscrita.clear();
+//                this.filaEscrita.forEach((no) -> {
+//                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
+//                    new Thread(writer).start();
+//                });
+//
+//                this.filaEscrita.clear();
             }
         }
 

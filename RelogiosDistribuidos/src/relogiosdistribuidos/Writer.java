@@ -41,7 +41,7 @@ public class Writer implements Runnable {
 
                 if (tipoMensagem.hasNextLine()) {
                     if (tipoMensagem.nextLine() == "REPLY") {
-                        cliente.respostasReply++;    
+                        //cliente.respostasReply++;    
                     }
                 }
             }else if(this.tipoMensagem == "REPLY"){
