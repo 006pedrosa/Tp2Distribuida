@@ -12,11 +12,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author pedro
- *
+ * <p>
  * CLASSE RESPONSÁVEL POR GERENCIAR UMA CONEXÃO COM ALGUM NO DA REDE
- *
  */
 public class ConnectionRuller implements Runnable {
 
@@ -93,6 +91,23 @@ public class ConnectionRuller implements Runnable {
                             break;
                         case "REPLY":
                             //this.cliente.respostasReply++;
+                            break;
+                        case "NEW ANSWER":
+                            try {
+                                Socket socketConexaoVolta = new Socket(this.socket.getInetAddress().getHostAddress(), this.cliente.portaEscuta);
+
+                                this.cliente.clientesNaRede.put(ipVizinho, socketConexaoVolta);
+
+                                System.out.println("INSERIU VIZINHO " + ipVizinho + " NO MAPA");
+                                System.out.println("LISTA DE TODOS OS VIZINHOS: ");
+                                this.cliente.clientesNaRede.forEach((keyIp, socket) -> {
+                                    System.out.println("NO: " + socket.getInetAddress().getHostAddress());
+                                });
+                                new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW ANSWER");
+                            } catch (IOException ex) {
+                                Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            break;
                         default:
                             break;
                     }
