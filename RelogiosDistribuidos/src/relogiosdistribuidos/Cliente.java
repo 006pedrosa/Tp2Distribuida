@@ -68,7 +68,7 @@ public class Cliente implements Runnable {
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA AGUARDANDO");
                 this.estado = "AGUARDANDO";
-                this.hsn = Long.toString(timestamp.getTime()*1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(500) +  + 1);
+                this.hsn = Long.toString(timestamp.getTime()*1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(999999) +  + 1);
                 permissaoEscrita = false;
 //                this.respostas = 0;
                 //this.respostasReply = 0;
