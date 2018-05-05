@@ -35,7 +35,7 @@ public class Writer implements Runnable {
         try {
             if(this.tipoMensagem == "REQUEST"){
                 new PrintStream(this.socket.getOutputStream()).println("REQUEST");
-                new PrintStream(this.socket.getOutputStream()).println(this.hsn + "," + ip);
+                new PrintStream(this.socket.getOutputStream()).println(this.hsn + "," + this.cliente.ipRede + this.cliente.digitosFinaisIp);
 
                 Scanner tipoMensagem = new Scanner(this.socket.getInputStream());
 
