@@ -66,9 +66,9 @@ public class ConnectionRuller implements Runnable {
                         case "REQUEST":
                             tipo = tipoMensagem.nextLine();
                             String[] mensagem = tipo.split(",");
-                            if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
-                                cliente.hsn = mensagem[0];
-                            }
+//                            if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
+//                                cliente.hsn = mensagem[0];
+//                            }
 
                             if (cliente.estado == "LIVRE") {
                                 new PrintStream(this.socket.getOutputStream()).println("REPLY");
@@ -76,6 +76,7 @@ public class ConnectionRuller implements Runnable {
                                 cliente.filaEscrita.add(tipo);
                             } else if (cliente.estado == "AGUARDANDO") {
                                 if (Long.parseLong(cliente.hsn) < Long.parseLong(mensagem[0])) {
+                                    cliente.respostasReply++;
                                     cliente.filaEscrita.add(tipo);
                                 } else {
                                     new PrintStream(this.socket.getOutputStream()).println("REPLY");
