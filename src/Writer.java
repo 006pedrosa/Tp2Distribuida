@@ -33,18 +33,18 @@ public class Writer implements Runnable {
     public void run() {
         try {
             if(this.tipoMensagem == "REQUEST"){
-                new PrintStream(socket.getOutputStream()).println("REQUEST");
-                new PrintStream(socket.getOutputStream()).println(hsn + "," + ip);
+                new PrintStream(this.socket.getOutputStream()).println("REQUEST");
+                new PrintStream(this.socket.getOutputStream()).println(hsn + "," + ip);
 
-                Scanner tipoMensagem = new Scanner(socket.getInputStream());
+                Scanner tipoMensagem = new Scanner(this.socket.getInputStream());
 
                 if (tipoMensagem.hasNextLine()) {
                     if (tipoMensagem.nextLine() == "REPLY") {
-                        cliente.respostasReply++;    
+                        //cliente.respostasReply++;    
                     }
                 }
             }else if(this.tipoMensagem == "REPLY"){
-                new PrintStream(socket.getOutputStream()).println("REPLY");
+                new PrintStream(this.socket.getOutputStream()).println("REPLY");
             }
         } catch (IOException ex) {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);

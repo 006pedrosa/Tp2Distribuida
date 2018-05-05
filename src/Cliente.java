@@ -22,9 +22,9 @@ public class Cliente implements Runnable {
     public String estado;
     public String hsn;
 
-    public int respostasReply;
-    public int respostas;
-    ArrayList<String> filaEscrita;
+//    public int respostasReply;
+//    public int respostas;
+//    ArrayList<String> filaEscrita;
     public int portaEscuta;
     public Listener listener;
     public Writer writer;
@@ -32,7 +32,7 @@ public class Cliente implements Runnable {
 
     public Cliente(String ip, int porta) throws IOException {
         estado = "LIVRE";
-        filaEscrita = new ArrayList<String>();
+//        filaEscrita = new ArrayList<String>();
 
         clientesNaRede = new HashMap<String, Socket>();
 
@@ -44,7 +44,7 @@ public class Cliente implements Runnable {
         listener = new Listener(this, this.portaEscuta);
         new Thread(listener).start();
         new Thread(this).start();
-
+        this.hsn=Long.toString(0000000000000000);
         for (int i = 0; i < 256; i++) {
             newNo = new JoinNetwork(this, i);
             new Thread(newNo).start();
@@ -61,36 +61,26 @@ public class Cliente implements Runnable {
         boolean permissaoEscrita;
         Random gerador = new Random();
         while (true) {
-            // ESPERA UM TEMPO PARA TENTAR ACESSAR A SC
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-//            }
             if (gerador.nextInt(10) >= 5) {
-                this.respostas = 0;
+//                this.respostas = 0;
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 this.estado = "AGUARDANDO";
-                this.hsn = Long.toString(timestamp.getTime() + 1);
+                this.hsn = Long.toString(timestamp.getTime()*1000 + (System.currentTimeMillis() % 1000) + gerador.nextInt(500) +  + 1);
                 permissaoEscrita = false;
-                this.respostas = 0;
-                this.respostasReply = 0;
+//                this.respostas = 0;
+                //this.respostasReply = 0;
 
-                while (permissaoEscrita == false) {
-                    this.clientesNaRede.forEach((keyIp, socket) -> {
-                        writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
-                        new Thread(writer).start();
-
-                    });
-
-                    while (this.respostasReply < this.clientesNaRede.size()) {
-
+                this.clientesNaRede.forEach((keyIp, socket) -> {
+                    writer = new Writer(keyIp, this.portaEscuta, this, this.hsn, socket, "REQUEST");
+                    Thread t = new Thread(writer);
+                    t.start();
+                    try {
+                        t.join();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    if (this.respostasReply == this.clientesNaRede.size()) {
-                        permissaoEscrita = true;
-                    }
-                }
+                });
 
                 this.estado = "OCUPADO";
                 try {
@@ -101,12 +91,12 @@ public class Cliente implements Runnable {
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
 
                 this.estado = "LIVRE";
-                this.filaEscrita.forEach((no) -> {
-                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
-                    new Thread(writer).start();
-                });
-
-                this.filaEscrita.clear();
+//                this.filaEscrita.forEach((no) -> {
+//                    writer = new Writer(no.split(",")[1], this.portaEscuta, this, this.hsn, this.clientesNaRede.get(no.split(",")[1]), "REPLY");
+//                    new Thread(writer).start();
+//                });
+//
+//                this.filaEscrita.clear();
             }
         }
 
