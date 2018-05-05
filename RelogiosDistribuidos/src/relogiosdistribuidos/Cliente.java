@@ -87,11 +87,11 @@ public class Cliente implements Runnable {
                 
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA OCUPADO");
                 this.estado = "OCUPADO";
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    Thread.sleep(3000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                 System.out.println((hsn) + " " + (hsn + 1) + " " + (hsn + 2) + " " + (hsn + 3) + " " + (hsn + 4));
                 
                 System.out.println("ALTEROU O ESTADO DE " + this.estado + " PARA LIVRE");
