@@ -26,7 +26,7 @@ public class JoinNetwork implements Runnable {
                 Socket socket = new Socket(this.clienteLocal.ipRede + Integer.toString(this.ultimosDigitos), this.clienteLocal.portaEscuta);
                 if (socket.isConnected()) {
                     new PrintStream(socket.getOutputStream()).println("NEW");
-                    //this.clienteLocal.clientesNaRede.put(socket.getInetAddress().getHostAddress(), socket);
+                    this.clienteLocal.clientesNaRede.put(socket.getInetAddress().getHostAddress(), socket);
                 }
             } catch (IOException ex) {
                 // do nothing
