@@ -103,7 +103,7 @@ public class ConnectionRuller implements Runnable {
                                 this.cliente.clientesNaRede.forEach((keyIp, socket) -> {
                                     System.out.println("NO: " + socket.getInetAddress().getHostAddress());
                                 });
-                                new PrintStream(socketConexaoVolta.getOutputStream()).println("NEW ANSWER");
+                                new PrintStream(socketConexaoVolta.getOutputStream()).println("REQUEST");
                             } catch (IOException ex) {
                                 Logger.getLogger(ConnectionRuller.class.getName()).log(Level.SEVERE, null, ex);
                             }
