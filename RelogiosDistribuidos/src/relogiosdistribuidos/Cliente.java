@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
-* classew responsavel por manter o listener ativo na porta da rede e executar os tratamentos da area critica
+* classe responsavel por manter o listener ativo na porta da rede e executar os tratamentos da area critica
 * */
 public class Cliente implements Runnable {
 
@@ -43,6 +43,7 @@ public class Cliente implements Runnable {
         new Thread(listener).start();
         new Thread(this).start();
 
+        // VERIFICA TODOS OS 256 ULTIMOS VALORES DE UM DETERMINADO IP SE EXISTE ALGUM OUTRO NÓ ESCUTANDO
         for (int i = 0; i < 256; i++) {
             newNo = new JoinNetwork(this, i);
             new Thread(newNo).start();

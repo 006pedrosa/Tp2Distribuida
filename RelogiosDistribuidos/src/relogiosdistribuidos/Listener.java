@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
@@ -39,6 +33,7 @@ public class Listener implements Runnable {
         while (true) {
             try {
                 Socket conexao = socketEscuta.accept();
+                // QUANDO A CONEXÃO É ESTABELECIDA, ABRE UMA THREAD PARA FICAR ESCUTANDO E TRATANDO TUDO QUE FOR ENVIADO 
                 if (conexao.isConnected()) {
                     ConnectionRuller conectionRuller = new ConnectionRuller(this.cliente, conexao);
                     new Thread(conectionRuller).start();
